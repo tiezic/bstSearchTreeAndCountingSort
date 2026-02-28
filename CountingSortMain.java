@@ -14,28 +14,52 @@ public class CountingSortMain {
         char[] charArray = {'A', 'A', 'Z', 'B', 'H', 'K', 'L', 'Z', 'W', 'X', 'P'};
         int[] freqArray = new int[range];
 
-        CountingSortCharacters.countingSort(charArray, freqArray, range);
+        //print outcome of countingSort()
+        System.out.println("Sorted array!: " + Arrays.toString(CountingSortCharacters.countingSort(charArray, freqArray, range)));
 
     }//end main
 
 
 }//end CountingSortMain
 
+
 class CountingSortCharacters {
 
-    static int[] countingSort(char[] charArray, int[] freqArray, int range) {
+    static char[] countingSort(char[] charArray, int[] freqArray, int range) {
 
         for (int i = 0; i < range; i++) {
             freqArray[i] = 0;
         }
 
+
+        freqArray[charArray[0] - 65]++; //for index 0
         for (int j = 1; j < charArray.length; j++) {
             freqArray[charArray[j] - 65]++;
         }
 
+
+        //print after count
+        System.out.println("Occurences of letters with indexes A = 0 -> Z = 25:");
         System.out.println(Arrays.toString(freqArray));
 
-        return freqArray;
+
+        for (int k = 1; k < range; k++) {
+            freqArray[k] = freqArray[k] + freqArray[k - 1];
+        }
+        
+
+        System.out.println("Occurences of letters with indexes A = 0 -> Z = 25:");
+        System.out.println(Arrays.toString(freqArray));
+
+
+        char[] sortedArray = new char[charArray.length];
+        for (int m = charArray.length - 1; m > -1; m--) {
+            freqArray[charArray[m] - 65]--;
+            sortedArray[freqArray[charArray[m] - 65]] = charArray[m];
+        }
+
+
+        return sortedArray;
     }//end countingSort
 
 
