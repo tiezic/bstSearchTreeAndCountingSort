@@ -15,7 +15,7 @@ public class CountingSortMain {
         int[] freqArray = new int[range];
 
         //print outcome of countingSort()
-        System.out.println("Sorted array!: " + Arrays.toString(CountingSortCharacters.countingSort(charArray, freqArray, range)));
+        System.out.println("\nSorted array!: " + Arrays.toString(CountingSortCharacters.countingSort(charArray, freqArray, range)));
 
     }//end main
 
@@ -23,40 +23,67 @@ public class CountingSortMain {
 }//end CountingSortMain
 
 
+/**
+ * This class uses a method to sort an array of 
+ * letters or more specifically an array of char 
+ * type elements by using counting sort
+ */
 class CountingSortCharacters {
 
     static char[] countingSort(char[] charArray, int[] freqArray, int range) {
 
+        //empty out freqArray
         for (int i = 0; i < range; i++) {
             freqArray[i] = 0;
         }
 
 
-        freqArray[charArray[0] - 65]++; //for index 0
-        for (int j = 1; j < charArray.length; j++) {
+        //count occurences of each letter
+        //A = 65, so (A - 65 = index 0) for freqArray
+        for (int j = 0; j < charArray.length; j++) {
             freqArray[charArray[j] - 65]++;
         }
 
 
-        //print after count
+        //print freqArray after counting
         System.out.println("Occurences of letters with indexes A = 0 -> Z = 25:");
         System.out.println(Arrays.toString(freqArray));
 
 
+        //fill array with # of letters less than or equal to k
         for (int k = 1; k < range; k++) {
             freqArray[k] = freqArray[k] + freqArray[k - 1];
         }
         
 
-        System.out.println("Occurences of letters with indexes A = 0 -> Z = 25:");
+        //print freqArray after for loop which finds letters <= k
+        System.out.println("Occurences of letters less than or equal to k:");
         System.out.println(Arrays.toString(freqArray));
 
 
+        /**
+         * fill out sortedArray by traversing charArray backwards,
+         * decrementing freqArray by 1 at the index of which the letter
+         * from charArray represented then assign the letter from charArray
+         * to sortedArray and the decremented number from freqArray as
+         * the index of sortedArray
+         * 
+         * ex: index 11 of charArray is 'P', so we use (80 - 65 = 15) as 'P's
+         * freqArray's index value, then we decrement freqArray at index 15 by 
+         * 1 which would give us (7 - 1 = 6), and we basically do 
+         * sortedArray[6] = 80 which is assigning index 6 of sortedArray to the 
+         * value 80 which is char 'P'
+         */
         char[] sortedArray = new char[charArray.length];
         for (int m = charArray.length - 1; m > -1; m--) {
             freqArray[charArray[m] - 65]--;
             sortedArray[freqArray[charArray[m] - 65]] = charArray[m];
         }
+
+
+        //print freqArray after sorting
+        System.out.println("freqArray after sorting into sortedArray: ");
+        System.out.println(Arrays.toString(freqArray));
 
 
         return sortedArray;

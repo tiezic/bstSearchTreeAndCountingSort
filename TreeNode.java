@@ -67,22 +67,29 @@ public class TreeNode {
     public static List<Integer> bstSearchTrace(TreeNode root, Integer k) {
         List<Integer> numberTrace = new ArrayList<>();
 
+        //base case
         if (root == null) {
             return numberTrace;
         }
 
+        //add current root to numberTrace list
         numberTrace.add(root.val);
 
+        //if desired value is found
         if (k == root.val) {
             return numberTrace;
         }
 
+        //however, if desired value hasn't been found yet, travel left
+        //if desired value is smaller than root and recurse, or right if 
+        //desired value is bigger than root and recurse
         if (k < root.val) {
             numberTrace.addAll(bstSearchTrace(root.left, k));
         } else {
             numberTrace.addAll(bstSearchTrace(root.right, k));
         }
 
+        //end of recursion
         return numberTrace;
 
     }//end bstSearchTrace
